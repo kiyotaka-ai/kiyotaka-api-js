@@ -1,0 +1,25 @@
+{
+  "name": "tharamine",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tharamine/tharamine-api-js.git"
+  },
+  "author": "tharamine developers",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/tharamine/tharamine-api-js/issues"
+  },
+  "homepage": "https://github.com/tharamine/tharamine-api-js#readme",
+  "description": "",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.11",
+    "google-protobuf": "^3.21.2",
+    "grpc-tools": "^1.12.4",
+    "protoc-gen-ts": "^0.8.7"
+  }
+}
