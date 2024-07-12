@@ -2,14 +2,15 @@ import { api } from "../tharamine/api/api";
 import * as grpc from "@grpc/grpc-js";
 
 async function main() {
-  // Create a gRPC client
+  const metadata = new grpc.Metadata();
+  metadata.set("x-tharamine-key", "YOUR_API_KEY_HERE");
+
   const client = new api.APIClient(
     "grpc.api.tharamine.com:443",
     grpc.credentials.createSsl()
   );
 
-  // Create the request
-  const from = Math.floor(Date.now() / 1000) - 60 * 60; // Current time minus 1 hour
+  const from = Math.floor(Date.now() / 1000) - 60 * 60;
   const request = new api.PointRequest({
     type: [api.PointType.TRADE_AGG],
     exchange: [api.PointExchange.BINANCE],
@@ -18,10 +19,8 @@ async function main() {
     from: from,
   });
 
-  // Stream points
-  const stream = client.StreamPoints(request);
+  const stream = client.StreamPoints(request, metadata);
 
-  // Handle the stream
   stream.on("data", (response: api.PointSeries) => {
     console.log(JSON.stringify(response.toObject()));
   });

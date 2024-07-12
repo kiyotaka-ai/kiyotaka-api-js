@@ -6,14 +6,16 @@
 import * as dependency_1 from "./../google/api/annotations";
 import * as dependency_2 from "./../protoc-gen-openapiv2/options/annotations";
 import * as dependency_3 from "./../trade_aggregation";
-import * as dependency_4 from "./../trade";
+import * as dependency_4 from "./../trade_side_agnostic_aggregation";
+import * as dependency_5 from "./../trade";
 import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
 export namespace api {
     export enum PointType {
         UNKNOWN_TYPE = 0,
         TRADE = 1,
-        TRADE_AGG = 9
+        TRADE_AGG = 9,
+        TRADE_SIDE_AGNOSTIC_AGG = 107
     }
     export enum PointSide {
         UNKNOWN_SIDE = 0,
@@ -1012,13 +1014,19 @@ export namespace api {
         }
     }
     export class Point extends pb_1.Message {
-        #one_of_decls: number[][] = [[7, 15], [1]];
+        #one_of_decls: number[][] = [[7, 15, 108], [1]];
         constructor(data?: any[] | ({} & (({
-            trade?: dependency_4.Trade;
+            trade?: dependency_5.Trade;
             tradeAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
         } | {
             trade?: never;
             tradeAggregation?: dependency_3.TradeAggregation;
+            tradeSideAgnosticAggregation?: never;
+        } | {
+            trade?: never;
+            tradeAggregation?: never;
+            tradeSideAgnosticAggregation?: dependency_4.TradeSideAgnosticAggregation;
         }) | ({
             id?: PointSeriesIdentifier;
         })))) {
@@ -1034,6 +1042,9 @@ export namespace api {
                 if ("tradeAggregation" in data && data.tradeAggregation != undefined) {
                     this.tradeAggregation = data.tradeAggregation;
                 }
+                if ("tradeSideAgnosticAggregation" in data && data.tradeSideAgnosticAggregation != undefined) {
+                    this.tradeSideAgnosticAggregation = data.tradeSideAgnosticAggregation;
+                }
             }
         }
         get id() {
@@ -1046,9 +1057,9 @@ export namespace api {
             return pb_1.Message.getField(this, 1) != null;
         }
         get trade() {
-            return pb_1.Message.getWrapperField(this, dependency_4.Trade, 7) as dependency_4.Trade;
+            return pb_1.Message.getWrapperField(this, dependency_5.Trade, 7) as dependency_5.Trade;
         }
-        set trade(value: dependency_4.Trade) {
+        set trade(value: dependency_5.Trade) {
             pb_1.Message.setOneofWrapperField(this, 7, this.#one_of_decls[0], value);
         }
         get has_trade() {
@@ -1063,15 +1074,25 @@ export namespace api {
         get has_tradeAggregation() {
             return pb_1.Message.getField(this, 15) != null;
         }
+        get tradeSideAgnosticAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_4.TradeSideAgnosticAggregation, 108) as dependency_4.TradeSideAgnosticAggregation;
+        }
+        set tradeSideAgnosticAggregation(value: dependency_4.TradeSideAgnosticAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 108, this.#one_of_decls[0], value);
+        }
+        get has_tradeSideAgnosticAggregation() {
+            return pb_1.Message.getField(this, 108) != null;
+        }
         get point() {
             const cases: {
-                [index: number]: "none" | "trade" | "tradeAggregation";
+                [index: number]: "none" | "trade" | "tradeAggregation" | "tradeSideAgnosticAggregation";
             } = {
                 0: "none",
                 7: "trade",
-                15: "tradeAggregation"
+                15: "tradeAggregation",
+                108: "tradeSideAgnosticAggregation"
             };
-            return cases[pb_1.Message.computeOneofCase(this, [7, 15])];
+            return cases[pb_1.Message.computeOneofCase(this, [7, 15, 108])];
         }
         get _id() {
             const cases: {
@@ -1084,26 +1105,31 @@ export namespace api {
         }
         static fromObject(data: {
             id?: ReturnType<typeof PointSeriesIdentifier.prototype.toObject>;
-            trade?: ReturnType<typeof dependency_4.Trade.prototype.toObject>;
+            trade?: ReturnType<typeof dependency_5.Trade.prototype.toObject>;
             tradeAggregation?: ReturnType<typeof dependency_3.TradeAggregation.prototype.toObject>;
+            tradeSideAgnosticAggregation?: ReturnType<typeof dependency_4.TradeSideAgnosticAggregation.prototype.toObject>;
         }): Point {
             const message = new Point({});
             if (data.id != null) {
                 message.id = PointSeriesIdentifier.fromObject(data.id);
             }
             if (data.trade != null) {
-                message.trade = dependency_4.Trade.fromObject(data.trade);
+                message.trade = dependency_5.Trade.fromObject(data.trade);
             }
             if (data.tradeAggregation != null) {
                 message.tradeAggregation = dependency_3.TradeAggregation.fromObject(data.tradeAggregation);
+            }
+            if (data.tradeSideAgnosticAggregation != null) {
+                message.tradeSideAgnosticAggregation = dependency_4.TradeSideAgnosticAggregation.fromObject(data.tradeSideAgnosticAggregation);
             }
             return message;
         }
         toObject() {
             const data: {
                 id?: ReturnType<typeof PointSeriesIdentifier.prototype.toObject>;
-                trade?: ReturnType<typeof dependency_4.Trade.prototype.toObject>;
+                trade?: ReturnType<typeof dependency_5.Trade.prototype.toObject>;
                 tradeAggregation?: ReturnType<typeof dependency_3.TradeAggregation.prototype.toObject>;
+                tradeSideAgnosticAggregation?: ReturnType<typeof dependency_4.TradeSideAgnosticAggregation.prototype.toObject>;
             } = {};
             if (this.id != null) {
                 data.id = this.id.toObject();
@@ -1113,6 +1139,9 @@ export namespace api {
             }
             if (this.tradeAggregation != null) {
                 data.tradeAggregation = this.tradeAggregation.toObject();
+            }
+            if (this.tradeSideAgnosticAggregation != null) {
+                data.tradeSideAgnosticAggregation = this.tradeSideAgnosticAggregation.toObject();
             }
             return data;
         }
@@ -1126,6 +1155,8 @@ export namespace api {
                 writer.writeMessage(7, this.trade, () => this.trade.serialize(writer));
             if (this.has_tradeAggregation)
                 writer.writeMessage(15, this.tradeAggregation, () => this.tradeAggregation.serialize(writer));
+            if (this.has_tradeSideAgnosticAggregation)
+                writer.writeMessage(108, this.tradeSideAgnosticAggregation, () => this.tradeSideAgnosticAggregation.serialize(writer));
             if (!w)
                 return writer.getResultBuffer();
         }
@@ -1139,10 +1170,13 @@ export namespace api {
                         reader.readMessage(message.id, () => message.id = PointSeriesIdentifier.deserialize(reader));
                         break;
                     case 7:
-                        reader.readMessage(message.trade, () => message.trade = dependency_4.Trade.deserialize(reader));
+                        reader.readMessage(message.trade, () => message.trade = dependency_5.Trade.deserialize(reader));
                         break;
                     case 15:
                         reader.readMessage(message.tradeAggregation, () => message.tradeAggregation = dependency_3.TradeAggregation.deserialize(reader));
+                        break;
+                    case 108:
+                        reader.readMessage(message.tradeSideAgnosticAggregation, () => message.tradeSideAgnosticAggregation = dependency_4.TradeSideAgnosticAggregation.deserialize(reader));
                         break;
                     default: reader.skipField();
                 }
