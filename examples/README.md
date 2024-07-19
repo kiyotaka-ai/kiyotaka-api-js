@@ -22,6 +22,9 @@ npm install
 ```
 
 ## Running the examples
+Edit the example file and replace the `YOUR_API_KEY_HERE` placeholder for `x-tharamine-key` with your own API key.
+
+Run the following command in the examples directory:
 ```bash
 npx tsx stream_points.ts
 ```
