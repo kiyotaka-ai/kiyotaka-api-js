@@ -1,5 +1,5 @@
 {
-  "name": "tharamine",
+  "name": "kiyotaka-api-js",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -7,14 +7,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tharamine/tharamine-api-js.git"
+    "url": "git+https://github.com/kiyotaka-ai/kiyotaka-api-js.git"
   },
-  "author": "tharamine developers",
+  "author": "kiyotaka developers",
   "license": "",
   "bugs": {
-    "url": "https://github.com/tharamine/tharamine-api-js/issues"
+    "url": "https://github.com/kiyotaka-ai/kiyotaka-api-js/issues"
   },
-  "homepage": "https://github.com/tharamine/tharamine-api-js#readme",
+  "homepage": "https://github.com/kiyotaka-ai/kiyotaka-api-js#readme",
   "description": "",
   "dependencies": {
     "@grpc/grpc-js": "^1.10.11",

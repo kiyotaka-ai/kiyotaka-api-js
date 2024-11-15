@@ -8,8 +8,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "tharamine/*": ["./tharamine/*"]
+      "kiyotaka/*": ["./kiyotaka/*"]
     }
   },
-  "include": ["examples/*", "tharamine/**/*"]
+  "include": ["examples/*", "kiyotaka/**/*"]
 }
