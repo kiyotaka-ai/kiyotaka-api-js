@@ -1,4 +1,4 @@
-import { api } from "../tharamine/api/api";
+import { api } from "../kiyotaka/api/api";
 import * as grpc from "@grpc/grpc-js";
 
 async function main() {

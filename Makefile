@@ -1,5 +1,5 @@
 PROTO_DIR := ./proto
-DIST := ./tharamine
+DIST := ./kiyotaka
 
 IMPORTS := -I $(PROTO_DIR)/service/ -I $(PROTO_DIR)/lib/ -I $(PROTO_DIR)/types/
 FILES := $(PROTO_DIR)/service/api/*.proto \
