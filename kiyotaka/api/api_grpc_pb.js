@@ -151,6 +151,18 @@ getRawSymbols: {
     responseSerialize: serialize_api_PointMetaResponse,
     responseDeserialize: deserialize_api_PointMetaResponse,
   },
+  // Retrieves available normalized symbols
+getNormalizedSymbols: {
+    path: '/api.API/GetNormalizedSymbols',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_api_pb.PointMetaRequest,
+    responseType: api_api_pb.PointMetaResponse,
+    requestSerialize: serialize_api_PointMetaRequest,
+    requestDeserialize: deserialize_api_PointMetaRequest,
+    responseSerialize: serialize_api_PointMetaResponse,
+    responseDeserialize: deserialize_api_PointMetaResponse,
+  },
 };
 
 exports.APIClient = grpc.makeGenericClientConstructor(APIService);

@@ -3,10 +3,10 @@ import * as grpc from "@grpc/grpc-js";
 
 async function main() {
   const metadata = new grpc.Metadata();
-  metadata.set("x-tharamine-key", "YOUR_API_KEY_HERE");
+  metadata.set("x-kiyotaka-key", "YOUR_API_KEY_HERE");
 
   const client = new api.APIClient(
-    "grpc.api.tharamine.com:443",
+    "grpc.api.kiyotaka.ai:443",
     grpc.credentials.createSsl()
   );
 

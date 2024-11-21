@@ -88,11 +88,12 @@ export namespace api {
             category?: PointCategory[];
             coin?: string[];
             rawSymbol?: string[];
+            normalizedSymbol?: string[];
             from?: number;
             to?: number;
         }) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2, 3, 4, 5], this.#one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2, 3, 4, 5, 8], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("type" in data && data.type != undefined) {
                     this.type = data.type;
@@ -108,6 +109,9 @@ export namespace api {
                 }
                 if ("rawSymbol" in data && data.rawSymbol != undefined) {
                     this.rawSymbol = data.rawSymbol;
+                }
+                if ("normalizedSymbol" in data && data.normalizedSymbol != undefined) {
+                    this.normalizedSymbol = data.normalizedSymbol;
                 }
                 if ("from" in data && data.from != undefined) {
                     this.from = data.from;
@@ -147,6 +151,12 @@ export namespace api {
         set rawSymbol(value: string[]) {
             pb_1.Message.setField(this, 5, value);
         }
+        get normalizedSymbol() {
+            return pb_1.Message.getFieldWithDefault(this, 8, []) as string[];
+        }
+        set normalizedSymbol(value: string[]) {
+            pb_1.Message.setField(this, 8, value);
+        }
         get from() {
             return pb_1.Message.getFieldWithDefault(this, 6, 0) as number;
         }
@@ -165,6 +175,7 @@ export namespace api {
             category?: PointCategory[];
             coin?: string[];
             rawSymbol?: string[];
+            normalizedSymbol?: string[];
             from?: number;
             to?: number;
         }): PointMetaRequest {
@@ -184,6 +195,9 @@ export namespace api {
             if (data.rawSymbol != null) {
                 message.rawSymbol = data.rawSymbol;
             }
+            if (data.normalizedSymbol != null) {
+                message.normalizedSymbol = data.normalizedSymbol;
+            }
             if (data.from != null) {
                 message.from = data.from;
             }
@@ -199,6 +213,7 @@ export namespace api {
                 category?: PointCategory[];
                 coin?: string[];
                 rawSymbol?: string[];
+                normalizedSymbol?: string[];
                 from?: number;
                 to?: number;
             } = {};
@@ -216,6 +231,9 @@ export namespace api {
             }
             if (this.rawSymbol != null) {
                 data.rawSymbol = this.rawSymbol;
+            }
+            if (this.normalizedSymbol != null) {
+                data.normalizedSymbol = this.normalizedSymbol;
             }
             if (this.from != null) {
                 data.from = this.from;
@@ -239,6 +257,8 @@ export namespace api {
                 writer.writeRepeatedString(4, this.coin);
             if (this.rawSymbol.length)
                 writer.writeRepeatedString(5, this.rawSymbol);
+            if (this.normalizedSymbol.length)
+                writer.writeRepeatedString(8, this.normalizedSymbol);
             if (this.from != 0)
                 writer.writeInt64(6, this.from);
             if (this.to != 0)
@@ -266,6 +286,9 @@ export namespace api {
                         break;
                     case 5:
                         pb_1.Message.addToRepeatedField(message, 5, reader.readString());
+                        break;
+                    case 8:
+                        pb_1.Message.addToRepeatedField(message, 8, reader.readString());
                         break;
                     case 6:
                         message.from = reader.readInt64();
@@ -360,9 +383,10 @@ export namespace api {
             categories?: PointCategory[];
             coins?: string[];
             rawSymbols?: string[];
+            normalizedSymbols?: string[];
         }) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2, 3, 4, 6], this.#one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2, 3, 4, 6, 7], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("types" in data && data.types != undefined) {
                     this.types = data.types;
@@ -378,6 +402,9 @@ export namespace api {
                 }
                 if ("rawSymbols" in data && data.rawSymbols != undefined) {
                     this.rawSymbols = data.rawSymbols;
+                }
+                if ("normalizedSymbols" in data && data.normalizedSymbols != undefined) {
+                    this.normalizedSymbols = data.normalizedSymbols;
                 }
             }
         }
@@ -411,12 +438,19 @@ export namespace api {
         set rawSymbols(value: string[]) {
             pb_1.Message.setField(this, 6, value);
         }
+        get normalizedSymbols() {
+            return pb_1.Message.getFieldWithDefault(this, 7, []) as string[];
+        }
+        set normalizedSymbols(value: string[]) {
+            pb_1.Message.setField(this, 7, value);
+        }
         static fromObject(data: {
             types?: PointType[];
             exchanges?: PointExchange[];
             categories?: PointCategory[];
             coins?: string[];
             rawSymbols?: string[];
+            normalizedSymbols?: string[];
         }): PointMetaResponse {
             const message = new PointMetaResponse({});
             if (data.types != null) {
@@ -434,6 +468,9 @@ export namespace api {
             if (data.rawSymbols != null) {
                 message.rawSymbols = data.rawSymbols;
             }
+            if (data.normalizedSymbols != null) {
+                message.normalizedSymbols = data.normalizedSymbols;
+            }
             return message;
         }
         toObject() {
@@ -443,6 +480,7 @@ export namespace api {
                 categories?: PointCategory[];
                 coins?: string[];
                 rawSymbols?: string[];
+                normalizedSymbols?: string[];
             } = {};
             if (this.types != null) {
                 data.types = this.types;
@@ -458,6 +496,9 @@ export namespace api {
             }
             if (this.rawSymbols != null) {
                 data.rawSymbols = this.rawSymbols;
+            }
+            if (this.normalizedSymbols != null) {
+                data.normalizedSymbols = this.normalizedSymbols;
             }
             return data;
         }
@@ -475,6 +516,8 @@ export namespace api {
                 writer.writeRepeatedString(4, this.coins);
             if (this.rawSymbols.length)
                 writer.writeRepeatedString(6, this.rawSymbols);
+            if (this.normalizedSymbols.length)
+                writer.writeRepeatedString(7, this.normalizedSymbols);
             if (!w)
                 return writer.getResultBuffer();
         }
@@ -498,6 +541,9 @@ export namespace api {
                         break;
                     case 6:
                         pb_1.Message.addToRepeatedField(message, 6, reader.readString());
+                        break;
+                    case 7:
+                        pb_1.Message.addToRepeatedField(message, 7, reader.readString());
                         break;
                     default: reader.skipField();
                 }
@@ -1371,6 +1417,15 @@ export namespace api {
                 requestDeserialize: (bytes: Buffer) => PointMetaRequest.deserialize(new Uint8Array(bytes)),
                 responseSerialize: (message: PointMetaResponse) => Buffer.from(message.serialize()),
                 responseDeserialize: (bytes: Buffer) => PointMetaResponse.deserialize(new Uint8Array(bytes))
+            },
+            GetNormalizedSymbols: {
+                path: "/api.API/GetNormalizedSymbols",
+                requestStream: false,
+                responseStream: false,
+                requestSerialize: (message: PointMetaRequest) => Buffer.from(message.serialize()),
+                requestDeserialize: (bytes: Buffer) => PointMetaRequest.deserialize(new Uint8Array(bytes)),
+                responseSerialize: (message: PointMetaResponse) => Buffer.from(message.serialize()),
+                responseDeserialize: (bytes: Buffer) => PointMetaResponse.deserialize(new Uint8Array(bytes))
             }
         };
         [method: string]: grpc_1.UntypedHandleCall;
@@ -1381,6 +1436,7 @@ export namespace api {
         abstract GetCategories(call: grpc_1.ServerUnaryCall<PointMetaRequest, PointMetaResponse>, callback: grpc_1.sendUnaryData<PointMetaResponse>): void;
         abstract GetCoins(call: grpc_1.ServerUnaryCall<PointMetaRequest, PointMetaResponse>, callback: grpc_1.sendUnaryData<PointMetaResponse>): void;
         abstract GetRawSymbols(call: grpc_1.ServerUnaryCall<PointMetaRequest, PointMetaResponse>, callback: grpc_1.sendUnaryData<PointMetaResponse>): void;
+        abstract GetNormalizedSymbols(call: grpc_1.ServerUnaryCall<PointMetaRequest, PointMetaResponse>, callback: grpc_1.sendUnaryData<PointMetaResponse>): void;
     }
     export class APIClient extends grpc_1.makeGenericClientConstructor(UnimplementedAPIService.definition, "API", {}) {
         constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
@@ -1406,6 +1462,9 @@ export namespace api {
         };
         GetRawSymbols: GrpcUnaryServiceInterface<PointMetaRequest, PointMetaResponse> = (message: PointMetaRequest, metadata: grpc_1.Metadata | grpc_1.CallOptions | grpc_1.requestCallback<PointMetaResponse>, options?: grpc_1.CallOptions | grpc_1.requestCallback<PointMetaResponse>, callback?: grpc_1.requestCallback<PointMetaResponse>): grpc_1.ClientUnaryCall => {
             return super.GetRawSymbols(message, metadata, options, callback);
+        };
+        GetNormalizedSymbols: GrpcUnaryServiceInterface<PointMetaRequest, PointMetaResponse> = (message: PointMetaRequest, metadata: grpc_1.Metadata | grpc_1.CallOptions | grpc_1.requestCallback<PointMetaResponse>, options?: grpc_1.CallOptions | grpc_1.requestCallback<PointMetaResponse>, callback?: grpc_1.requestCallback<PointMetaResponse>): grpc_1.ClientUnaryCall => {
+            return super.GetNormalizedSymbols(message, metadata, options, callback);
         };
     }
 }

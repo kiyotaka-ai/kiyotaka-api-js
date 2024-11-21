@@ -22,7 +22,7 @@ npm install
 ```
 
 ## Running the examples
-Edit the example file and replace the `YOUR_API_KEY_HERE` placeholder for `x-tharamine-key` with your own API key.
+Edit the example file and replace the `YOUR_API_KEY_HERE` placeholder for `x-kiyotaka-key` with your own API key.
 
 Run the following command in the examples directory:
 ```bash

@@ -197,7 +197,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.api.PointMetaRequest.repeatedFields_ = [1,2,3,4,5];
+proto.api.PointMetaRequest.repeatedFields_ = [1,2,3,4,5,8];
 
 
 
@@ -235,6 +235,7 @@ proto.api.PointMetaRequest.toObject = function(includeInstance, msg) {
     categoryList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
     coinList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
     rawsymbolList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    normalizedsymbolList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
     from: jspb.Message.getFieldWithDefault(msg, 6, 0),
     to: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
@@ -298,6 +299,10 @@ proto.api.PointMetaRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addRawsymbol(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addNormalizedsymbol(value);
       break;
     case 6:
       var value = /** @type {number} */ (reader.readInt64());
@@ -368,6 +373,13 @@ proto.api.PointMetaRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeRepeatedString(
       5,
+      f
+    );
+  }
+  f = message.getNormalizedsymbolList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      8,
       f
     );
   }
@@ -574,6 +586,43 @@ proto.api.PointMetaRequest.prototype.clearRawsymbolList = function() {
 
 
 /**
+ * repeated string normalizedSymbol = 8;
+ * @return {!Array<string>}
+ */
+proto.api.PointMetaRequest.prototype.getNormalizedsymbolList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.api.PointMetaRequest} returns this
+ */
+proto.api.PointMetaRequest.prototype.setNormalizedsymbolList = function(value) {
+  return jspb.Message.setField(this, 8, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.api.PointMetaRequest} returns this
+ */
+proto.api.PointMetaRequest.prototype.addNormalizedsymbol = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.api.PointMetaRequest} returns this
+ */
+proto.api.PointMetaRequest.prototype.clearNormalizedsymbolList = function() {
+  return this.setNormalizedsymbolList([]);
+};
+
+
+/**
  * optional int64 from = 6;
  * @return {number}
  */
@@ -775,7 +824,7 @@ proto.api.PointResponse.prototype.clearSeriesList = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.api.PointMetaResponse.repeatedFields_ = [1,2,3,4,6];
+proto.api.PointMetaResponse.repeatedFields_ = [1,2,3,4,6,7];
 
 
 
@@ -812,7 +861,8 @@ proto.api.PointMetaResponse.toObject = function(includeInstance, msg) {
     exchangesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
     categoriesList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
     coinsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    rawsymbolsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
+    rawsymbolsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
+    normalizedsymbolsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -875,6 +925,10 @@ proto.api.PointMetaResponse.deserializeBinaryFromReader = function(msg, reader) 
       var value = /** @type {string} */ (reader.readString());
       msg.addRawsymbols(value);
       break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addNormalizedsymbols(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -936,6 +990,13 @@ proto.api.PointMetaResponse.serializeBinaryToWriter = function(message, writer) 
   if (f.length > 0) {
     writer.writeRepeatedString(
       6,
+      f
+    );
+  }
+  f = message.getNormalizedsymbolsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
       f
     );
   }
@@ -1124,6 +1185,43 @@ proto.api.PointMetaResponse.prototype.addRawsymbols = function(value, opt_index)
  */
 proto.api.PointMetaResponse.prototype.clearRawsymbolsList = function() {
   return this.setRawsymbolsList([]);
+};
+
+
+/**
+ * repeated string normalizedSymbols = 7;
+ * @return {!Array<string>}
+ */
+proto.api.PointMetaResponse.prototype.getNormalizedsymbolsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.api.PointMetaResponse} returns this
+ */
+proto.api.PointMetaResponse.prototype.setNormalizedsymbolsList = function(value) {
+  return jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.api.PointMetaResponse} returns this
+ */
+proto.api.PointMetaResponse.prototype.addNormalizedsymbols = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.api.PointMetaResponse} returns this
+ */
+proto.api.PointMetaResponse.prototype.clearNormalizedsymbolsList = function() {
+  return this.setNormalizedsymbolsList([]);
 };
 
 
