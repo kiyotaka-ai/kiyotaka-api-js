@@ -31,6 +31,18 @@ var trade_side_agnostic_aggregation_pb = require('../trade_side_agnostic_aggrega
 goog.object.extend(proto, trade_side_agnostic_aggregation_pb);
 var trade_pb = require('../trade_pb.js');
 goog.object.extend(proto, trade_pb);
+var open_interest_aggregation_pb = require('../open_interest_aggregation_pb.js');
+goog.object.extend(proto, open_interest_aggregation_pb);
+var funding_rate_aggregation_pb = require('../funding_rate_aggregation_pb.js');
+goog.object.extend(proto, funding_rate_aggregation_pb);
+var liquidation_aggregation_pb = require('../liquidation_aggregation_pb.js');
+goog.object.extend(proto, liquidation_aggregation_pb);
+var cme_open_interest_aggregation_pb = require('../cme_open_interest_aggregation_pb.js');
+goog.object.extend(proto, cme_open_interest_aggregation_pb);
+var option_open_interest_aggregation_pb = require('../option_open_interest_aggregation_pb.js');
+goog.object.extend(proto, option_open_interest_aggregation_pb);
+var hyperliquid_liquidation_aggregation_pb = require('../hyperliquid_liquidation_aggregation_pb.js');
+goog.object.extend(proto, hyperliquid_liquidation_aggregation_pb);
 goog.exportSymbol('proto.api.Point', null, global);
 goog.exportSymbol('proto.api.Point.PointCase', null, global);
 goog.exportSymbol('proto.api.PointAggregationInterval', null, global);
@@ -2101,7 +2113,7 @@ proto.api.PointSeriesIdentifier.prototype.setCoin = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.api.Point.oneofGroups_ = [[7,15,108]];
+proto.api.Point.oneofGroups_ = [[7,10,12,13,15,20,60,108,148]];
 
 /**
  * @enum {number}
@@ -2109,8 +2121,14 @@ proto.api.Point.oneofGroups_ = [[7,15,108]];
 proto.api.Point.PointCase = {
   POINT_NOT_SET: 0,
   TRADE: 7,
+  FUNDINGRATEAGGREGATION: 10,
+  LIQUIDATIONAGGREGATION: 12,
+  OPENINTERESTAGGREGATION: 13,
   TRADEAGGREGATION: 15,
-  TRADESIDEAGNOSTICAGGREGATION: 108
+  CMEOPENINTERESTAGGREGATION: 20,
+  OPTIONOPENINTERESTAGGREGATION: 60,
+  TRADESIDEAGNOSTICAGGREGATION: 108,
+  HYPERLIQUIDLIQUIDATIONAGGREGATION: 148
 };
 
 /**
@@ -2153,8 +2171,14 @@ proto.api.Point.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: (f = msg.getId()) && proto.api.PointSeriesIdentifier.toObject(includeInstance, f),
     trade: (f = msg.getTrade()) && trade_pb.Trade.toObject(includeInstance, f),
+    fundingrateaggregation: (f = msg.getFundingrateaggregation()) && funding_rate_aggregation_pb.FundingRateAggregation.toObject(includeInstance, f),
+    liquidationaggregation: (f = msg.getLiquidationaggregation()) && liquidation_aggregation_pb.LiquidationAggregation.toObject(includeInstance, f),
+    openinterestaggregation: (f = msg.getOpeninterestaggregation()) && open_interest_aggregation_pb.OpenInterestAggregation.toObject(includeInstance, f),
     tradeaggregation: (f = msg.getTradeaggregation()) && trade_aggregation_pb.TradeAggregation.toObject(includeInstance, f),
-    tradesideagnosticaggregation: (f = msg.getTradesideagnosticaggregation()) && trade_side_agnostic_aggregation_pb.TradeSideAgnosticAggregation.toObject(includeInstance, f)
+    cmeopeninterestaggregation: (f = msg.getCmeopeninterestaggregation()) && cme_open_interest_aggregation_pb.CmeOpenInterestAggregation.toObject(includeInstance, f),
+    optionopeninterestaggregation: (f = msg.getOptionopeninterestaggregation()) && option_open_interest_aggregation_pb.OptionOpenInterestAggregation.toObject(includeInstance, f),
+    tradesideagnosticaggregation: (f = msg.getTradesideagnosticaggregation()) && trade_side_agnostic_aggregation_pb.TradeSideAgnosticAggregation.toObject(includeInstance, f),
+    hyperliquidliquidationaggregation: (f = msg.getHyperliquidliquidationaggregation()) && hyperliquid_liquidation_aggregation_pb.HyperliquidLiquidationAggregation.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2201,15 +2225,45 @@ proto.api.Point.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value,trade_pb.Trade.deserializeBinaryFromReader);
       msg.setTrade(value);
       break;
+    case 10:
+      var value = new funding_rate_aggregation_pb.FundingRateAggregation;
+      reader.readMessage(value,funding_rate_aggregation_pb.FundingRateAggregation.deserializeBinaryFromReader);
+      msg.setFundingrateaggregation(value);
+      break;
+    case 12:
+      var value = new liquidation_aggregation_pb.LiquidationAggregation;
+      reader.readMessage(value,liquidation_aggregation_pb.LiquidationAggregation.deserializeBinaryFromReader);
+      msg.setLiquidationaggregation(value);
+      break;
+    case 13:
+      var value = new open_interest_aggregation_pb.OpenInterestAggregation;
+      reader.readMessage(value,open_interest_aggregation_pb.OpenInterestAggregation.deserializeBinaryFromReader);
+      msg.setOpeninterestaggregation(value);
+      break;
     case 15:
       var value = new trade_aggregation_pb.TradeAggregation;
       reader.readMessage(value,trade_aggregation_pb.TradeAggregation.deserializeBinaryFromReader);
       msg.setTradeaggregation(value);
       break;
+    case 20:
+      var value = new cme_open_interest_aggregation_pb.CmeOpenInterestAggregation;
+      reader.readMessage(value,cme_open_interest_aggregation_pb.CmeOpenInterestAggregation.deserializeBinaryFromReader);
+      msg.setCmeopeninterestaggregation(value);
+      break;
+    case 60:
+      var value = new option_open_interest_aggregation_pb.OptionOpenInterestAggregation;
+      reader.readMessage(value,option_open_interest_aggregation_pb.OptionOpenInterestAggregation.deserializeBinaryFromReader);
+      msg.setOptionopeninterestaggregation(value);
+      break;
     case 108:
       var value = new trade_side_agnostic_aggregation_pb.TradeSideAgnosticAggregation;
       reader.readMessage(value,trade_side_agnostic_aggregation_pb.TradeSideAgnosticAggregation.deserializeBinaryFromReader);
       msg.setTradesideagnosticaggregation(value);
+      break;
+    case 148:
+      var value = new hyperliquid_liquidation_aggregation_pb.HyperliquidLiquidationAggregation;
+      reader.readMessage(value,hyperliquid_liquidation_aggregation_pb.HyperliquidLiquidationAggregation.deserializeBinaryFromReader);
+      msg.setHyperliquidliquidationaggregation(value);
       break;
     default:
       reader.skipField();
@@ -2256,6 +2310,30 @@ proto.api.Point.serializeBinaryToWriter = function(message, writer) {
       trade_pb.Trade.serializeBinaryToWriter
     );
   }
+  f = message.getFundingrateaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      funding_rate_aggregation_pb.FundingRateAggregation.serializeBinaryToWriter
+    );
+  }
+  f = message.getLiquidationaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      liquidation_aggregation_pb.LiquidationAggregation.serializeBinaryToWriter
+    );
+  }
+  f = message.getOpeninterestaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      13,
+      f,
+      open_interest_aggregation_pb.OpenInterestAggregation.serializeBinaryToWriter
+    );
+  }
   f = message.getTradeaggregation();
   if (f != null) {
     writer.writeMessage(
@@ -2264,12 +2342,36 @@ proto.api.Point.serializeBinaryToWriter = function(message, writer) {
       trade_aggregation_pb.TradeAggregation.serializeBinaryToWriter
     );
   }
+  f = message.getCmeopeninterestaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      20,
+      f,
+      cme_open_interest_aggregation_pb.CmeOpenInterestAggregation.serializeBinaryToWriter
+    );
+  }
+  f = message.getOptionopeninterestaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      60,
+      f,
+      option_open_interest_aggregation_pb.OptionOpenInterestAggregation.serializeBinaryToWriter
+    );
+  }
   f = message.getTradesideagnosticaggregation();
   if (f != null) {
     writer.writeMessage(
       108,
       f,
       trade_side_agnostic_aggregation_pb.TradeSideAgnosticAggregation.serializeBinaryToWriter
+    );
+  }
+  f = message.getHyperliquidliquidationaggregation();
+  if (f != null) {
+    writer.writeMessage(
+      148,
+      f,
+      hyperliquid_liquidation_aggregation_pb.HyperliquidLiquidationAggregation.serializeBinaryToWriter
     );
   }
 };
@@ -2350,6 +2452,117 @@ proto.api.Point.prototype.hasTrade = function() {
 
 
 /**
+ * optional FundingRateAggregation fundingRateAggregation = 10;
+ * @return {?proto.FundingRateAggregation}
+ */
+proto.api.Point.prototype.getFundingrateaggregation = function() {
+  return /** @type{?proto.FundingRateAggregation} */ (
+    jspb.Message.getWrapperField(this, funding_rate_aggregation_pb.FundingRateAggregation, 10));
+};
+
+
+/**
+ * @param {?proto.FundingRateAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setFundingrateaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 10, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearFundingrateaggregation = function() {
+  return this.setFundingrateaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasFundingrateaggregation = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional LiquidationAggregation liquidationAggregation = 12;
+ * @return {?proto.LiquidationAggregation}
+ */
+proto.api.Point.prototype.getLiquidationaggregation = function() {
+  return /** @type{?proto.LiquidationAggregation} */ (
+    jspb.Message.getWrapperField(this, liquidation_aggregation_pb.LiquidationAggregation, 12));
+};
+
+
+/**
+ * @param {?proto.LiquidationAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setLiquidationaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 12, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearLiquidationaggregation = function() {
+  return this.setLiquidationaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasLiquidationaggregation = function() {
+  return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional OpenInterestAggregation openInterestAggregation = 13;
+ * @return {?proto.OpenInterestAggregation}
+ */
+proto.api.Point.prototype.getOpeninterestaggregation = function() {
+  return /** @type{?proto.OpenInterestAggregation} */ (
+    jspb.Message.getWrapperField(this, open_interest_aggregation_pb.OpenInterestAggregation, 13));
+};
+
+
+/**
+ * @param {?proto.OpenInterestAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setOpeninterestaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 13, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearOpeninterestaggregation = function() {
+  return this.setOpeninterestaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasOpeninterestaggregation = function() {
+  return jspb.Message.getField(this, 13) != null;
+};
+
+
+/**
  * optional TradeAggregation tradeAggregation = 15;
  * @return {?proto.TradeAggregation}
  */
@@ -2387,6 +2600,80 @@ proto.api.Point.prototype.hasTradeaggregation = function() {
 
 
 /**
+ * optional CmeOpenInterestAggregation cmeOpenInterestAggregation = 20;
+ * @return {?proto.CmeOpenInterestAggregation}
+ */
+proto.api.Point.prototype.getCmeopeninterestaggregation = function() {
+  return /** @type{?proto.CmeOpenInterestAggregation} */ (
+    jspb.Message.getWrapperField(this, cme_open_interest_aggregation_pb.CmeOpenInterestAggregation, 20));
+};
+
+
+/**
+ * @param {?proto.CmeOpenInterestAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setCmeopeninterestaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 20, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearCmeopeninterestaggregation = function() {
+  return this.setCmeopeninterestaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasCmeopeninterestaggregation = function() {
+  return jspb.Message.getField(this, 20) != null;
+};
+
+
+/**
+ * optional OptionOpenInterestAggregation optionOpenInterestAggregation = 60;
+ * @return {?proto.OptionOpenInterestAggregation}
+ */
+proto.api.Point.prototype.getOptionopeninterestaggregation = function() {
+  return /** @type{?proto.OptionOpenInterestAggregation} */ (
+    jspb.Message.getWrapperField(this, option_open_interest_aggregation_pb.OptionOpenInterestAggregation, 60));
+};
+
+
+/**
+ * @param {?proto.OptionOpenInterestAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setOptionopeninterestaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 60, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearOptionopeninterestaggregation = function() {
+  return this.setOptionopeninterestaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasOptionopeninterestaggregation = function() {
+  return jspb.Message.getField(this, 60) != null;
+};
+
+
+/**
  * optional TradeSideAgnosticAggregation tradeSideAgnosticAggregation = 108;
  * @return {?proto.TradeSideAgnosticAggregation}
  */
@@ -2420,6 +2707,43 @@ proto.api.Point.prototype.clearTradesideagnosticaggregation = function() {
  */
 proto.api.Point.prototype.hasTradesideagnosticaggregation = function() {
   return jspb.Message.getField(this, 108) != null;
+};
+
+
+/**
+ * optional HyperliquidLiquidationAggregation hyperliquidLiquidationAggregation = 148;
+ * @return {?proto.HyperliquidLiquidationAggregation}
+ */
+proto.api.Point.prototype.getHyperliquidliquidationaggregation = function() {
+  return /** @type{?proto.HyperliquidLiquidationAggregation} */ (
+    jspb.Message.getWrapperField(this, hyperliquid_liquidation_aggregation_pb.HyperliquidLiquidationAggregation, 148));
+};
+
+
+/**
+ * @param {?proto.HyperliquidLiquidationAggregation|undefined} value
+ * @return {!proto.api.Point} returns this
+*/
+proto.api.Point.prototype.setHyperliquidliquidationaggregation = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 148, proto.api.Point.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.api.Point} returns this
+ */
+proto.api.Point.prototype.clearHyperliquidliquidationaggregation = function() {
+  return this.setHyperliquidliquidationaggregation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.api.Point.prototype.hasHyperliquidliquidationaggregation = function() {
+  return jspb.Message.getField(this, 148) != null;
 };
 
 
@@ -2641,7 +2965,13 @@ proto.api.PointType = {
   UNKNOWN_TYPE: 0,
   TRADE: 1,
   TRADE_AGG: 9,
-  TRADE_SIDE_AGNOSTIC_AGG: 107
+  OPEN_INTEREST_AGG: 10,
+  FUNDING_RATE_AGG: 11,
+  LIQUIDATION_AGG: 12,
+  CME_OPEN_INTEREST_AGG: 19,
+  OPTION_OPEN_INTEREST_AGG: 59,
+  TRADE_SIDE_AGNOSTIC_AGG: 107,
+  HYPERLIQUID_LIQUIDATION_AGG: 147
 };
 
 /**
@@ -2662,12 +2992,17 @@ proto.api.PointExchange = {
   DERIBIT: 2,
   BINANCE_FUTURES: 3,
   BINANCE_DELIVERY: 4,
+  BINANCE_OPTIONS: 5,
   BINANCE: 6,
   FTX: 7,
   OKEX_FUTURES: 8,
   OKEX_OPTIONS: 9,
   OKEX_SWAP: 10,
   OKEX: 11,
+  HUOBI_DM: 12,
+  HUOBI_DM_SWAP: 13,
+  HUOBI_DM_LINEAR_SWAP: 14,
+  HUOBI: 15,
   BITFINEX_DERIVATIVES: 16,
   BITFINEX: 17,
   COINBASE: 18,
@@ -2675,26 +3010,94 @@ proto.api.PointExchange = {
   KRAKEN: 20,
   BITSTAMP: 21,
   GEMINI: 22,
+  POLONIEX: 23,
   BYBIT: 24,
+  PHEMEX: 25,
+  DELTA: 26,
+  FTX_US: 27,
+  BINANCE_US: 28,
+  GATE_IO_FUTURES: 29,
+  GATE_IO: 30,
+  OKCOIN: 31,
+  BITFLYER: 32,
+  HITBTC: 33,
+  COINFLEX: 34,
+  BINANCE_JERSEY: 35,
+  BINANCE_DEX: 36,
+  UPBIT: 37,
+  ASCENDEX: 38,
+  DYDX: 39,
+  SERUM: 40,
+  HUOBI_DM_OPTIONS: 41,
+  CME: 42,
+  COMMON_BINANCE: 43,
+  BITBANK: 44,
+  COMMON_BITFINEX: 45,
+  BITHUMB: 46,
+  BITTREX: 47,
+  COINCHECK: 48,
+  COMMON_GATE_IO: 49,
+  COINBASE_PRO: 50,
+  COMMON_HUOBI: 51,
+  KUCOIN: 52,
+  LMAX: 53,
+  COMMON_OKEX: 54,
+  LIQUID: 55,
+  ZAIF: 56,
+  RIBBON: 57,
+  EMULATOR: 58,
+  GRAYSCALE: 59,
   BYBIT_SPOT: 60,
   NYSE_AMERICAN: 61,
   NASDAQ_BX: 62,
   NYSE_NATIONAL: 63,
   FINRA: 64,
+  UNLISTED_TRADING_PRIVILEGES: 65,
+  NASDAQ_ISE: 66,
   CBOE_EDGA: 67,
   CBOE_EDGX: 68,
   NYSE_CHICAGO: 69,
   NYSE: 70,
   NYSE_ARCA: 71,
   NASDAQ: 72,
+  CONSOLIDATED_TAPE_ASSOCIATION: 73,
   LTSE: 74,
   IEX: 75,
+  CBOE: 76,
   NASDAQ_PHILADELPHIA: 77,
   CBOE_BYX: 78,
   CBOE_BZX: 79,
   MIAX_PEARL: 80,
   MEMBERS_EXCHANGE: 81,
-  OTC_EQUITY_SECURITY: 82
+  OTC_EQUITY_SECURITY: 82,
+  BITGET: 83,
+  HYPERLIQUID: 84,
+  HYPERLIQUID_FUTURES: 85,
+  MARKET_INDEPENDENT: 86,
+  NASDAQ_SMALL_CAP: 87,
+  NASDAQ_INT: 88,
+  NASDAQ_PSX: 89,
+  PYTH_NETWORK: 90,
+  COINBASE_INTERNATIONAL: 91,
+  POLYGON: 92,
+  POLYGON_FX: 93,
+  UNISWAP_V2: 150,
+  SUSHISWAP_V2: 151,
+  PANCAKESWAP_V2: 152,
+  SHIBASWAP: 153,
+  FRAXSWAP: 154,
+  SOLIDLY: 155,
+  UNISWAP_V3: 156,
+  SUSHISWAP_V3: 157,
+  PANCAKESWAP_V3: 158,
+  SOLIDLY_V3: 159,
+  RAYDIUM_V4: 160,
+  RAYDIUM_CLMM: 161,
+  ORCA_WHIRLPOOL: 162,
+  ORCA_V2: 163,
+  METEORA_POOL: 164,
+  METEORA_DLMM: 165,
+  UNISWAP_V4: 166
 };
 
 /**

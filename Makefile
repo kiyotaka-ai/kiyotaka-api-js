@@ -1,18 +1,20 @@
-PROTO_DIR := ./proto
+PROTO_DIR := ./api.kiyotaka.ai/proto
 DIST := ./kiyotaka
 
 IMPORTS := -I $(PROTO_DIR)/service/ -I $(PROTO_DIR)/lib/ -I $(PROTO_DIR)/types/
 FILES := $(PROTO_DIR)/service/api/*.proto \
 		$(PROTO_DIR)/lib/timestamp/timestamp.proto \
-		$(PROTO_DIR)/types/trade.proto \
-		$(PROTO_DIR)/types/trade_aggregation.proto \
-		$(PROTO_DIR)/types/trade_side_agnostic_aggregation.proto
+		$(PROTO_DIR)/types/*.proto \
 
-.PHONY: all clean
+.PHONY: clean all
 
 all: $(DIST)
 
-$(DIST):
+$(PROTO_DIR):
+	wget --recursive https://api.kiyotaka.ai/proto/
+	find $(PROTO_DIR) -type f -name index.html -delete
+
+$(DIST): $(PROTO_DIR)
 	mkdir -p $(DIST)
 
 	npx grpc_tools_node_protoc \
@@ -28,4 +30,4 @@ $(DIST):
 		$(FILES)
 
 clean:
-	rm -rf $(DIST)
+	rm -rf $(DIST) $(PROTO_DIR)

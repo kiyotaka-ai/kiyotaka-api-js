@@ -8,6 +8,12 @@ var protoc$gen$openapiv2_options_annotations_pb = require('../protoc-gen-openapi
 var trade_aggregation_pb = require('../trade_aggregation_pb.js');
 var trade_side_agnostic_aggregation_pb = require('../trade_side_agnostic_aggregation_pb.js');
 var trade_pb = require('../trade_pb.js');
+var open_interest_aggregation_pb = require('../open_interest_aggregation_pb.js');
+var funding_rate_aggregation_pb = require('../funding_rate_aggregation_pb.js');
+var liquidation_aggregation_pb = require('../liquidation_aggregation_pb.js');
+var cme_open_interest_aggregation_pb = require('../cme_open_interest_aggregation_pb.js');
+var option_open_interest_aggregation_pb = require('../option_open_interest_aggregation_pb.js');
+var hyperliquid_liquidation_aggregation_pb = require('../hyperliquid_liquidation_aggregation_pb.js');
 
 function serialize_api_PointMetaRequest(arg) {
   if (!(arg instanceof api_api_pb.PointMetaRequest)) {

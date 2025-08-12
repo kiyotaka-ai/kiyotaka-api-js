@@ -8,6 +8,12 @@ import * as dependency_2 from "./../protoc-gen-openapiv2/options/annotations";
 import * as dependency_3 from "./../trade_aggregation";
 import * as dependency_4 from "./../trade_side_agnostic_aggregation";
 import * as dependency_5 from "./../trade";
+import * as dependency_6 from "./../open_interest_aggregation";
+import * as dependency_7 from "./../funding_rate_aggregation";
+import * as dependency_8 from "./../liquidation_aggregation";
+import * as dependency_9 from "./../cme_open_interest_aggregation";
+import * as dependency_10 from "./../option_open_interest_aggregation";
+import * as dependency_11 from "./../hyperliquid_liquidation_aggregation";
 import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
 export namespace api {
@@ -15,7 +21,13 @@ export namespace api {
         UNKNOWN_TYPE = 0,
         TRADE = 1,
         TRADE_AGG = 9,
-        TRADE_SIDE_AGNOSTIC_AGG = 107
+        OPEN_INTEREST_AGG = 10,
+        FUNDING_RATE_AGG = 11,
+        LIQUIDATION_AGG = 12,
+        CME_OPEN_INTEREST_AGG = 19,
+        OPTION_OPEN_INTEREST_AGG = 59,
+        TRADE_SIDE_AGNOSTIC_AGG = 107,
+        HYPERLIQUID_LIQUIDATION_AGG = 147
     }
     export enum PointSide {
         UNKNOWN_SIDE = 0,
@@ -28,12 +40,17 @@ export namespace api {
         DERIBIT = 2,
         BINANCE_FUTURES = 3,
         BINANCE_DELIVERY = 4,
+        BINANCE_OPTIONS = 5,
         BINANCE = 6,
         FTX = 7,
         OKEX_FUTURES = 8,
         OKEX_OPTIONS = 9,
         OKEX_SWAP = 10,
         OKEX = 11,
+        HUOBI_DM = 12,
+        HUOBI_DM_SWAP = 13,
+        HUOBI_DM_LINEAR_SWAP = 14,
+        HUOBI = 15,
         BITFINEX_DERIVATIVES = 16,
         BITFINEX = 17,
         COINBASE = 18,
@@ -41,26 +58,94 @@ export namespace api {
         KRAKEN = 20,
         BITSTAMP = 21,
         GEMINI = 22,
+        POLONIEX = 23,
         BYBIT = 24,
+        PHEMEX = 25,
+        DELTA = 26,
+        FTX_US = 27,
+        BINANCE_US = 28,
+        GATE_IO_FUTURES = 29,
+        GATE_IO = 30,
+        OKCOIN = 31,
+        BITFLYER = 32,
+        HITBTC = 33,
+        COINFLEX = 34,
+        BINANCE_JERSEY = 35,
+        BINANCE_DEX = 36,
+        UPBIT = 37,
+        ASCENDEX = 38,
+        DYDX = 39,
+        SERUM = 40,
+        HUOBI_DM_OPTIONS = 41,
+        CME = 42,
+        COMMON_BINANCE = 43,
+        BITBANK = 44,
+        COMMON_BITFINEX = 45,
+        BITHUMB = 46,
+        BITTREX = 47,
+        COINCHECK = 48,
+        COMMON_GATE_IO = 49,
+        COINBASE_PRO = 50,
+        COMMON_HUOBI = 51,
+        KUCOIN = 52,
+        LMAX = 53,
+        COMMON_OKEX = 54,
+        LIQUID = 55,
+        ZAIF = 56,
+        RIBBON = 57,
+        EMULATOR = 58,
+        GRAYSCALE = 59,
         BYBIT_SPOT = 60,
         NYSE_AMERICAN = 61,
         NASDAQ_BX = 62,
         NYSE_NATIONAL = 63,
         FINRA = 64,
+        UNLISTED_TRADING_PRIVILEGES = 65,
+        NASDAQ_ISE = 66,
         CBOE_EDGA = 67,
         CBOE_EDGX = 68,
         NYSE_CHICAGO = 69,
         NYSE = 70,
         NYSE_ARCA = 71,
         NASDAQ = 72,
+        CONSOLIDATED_TAPE_ASSOCIATION = 73,
         LTSE = 74,
         IEX = 75,
+        CBOE = 76,
         NASDAQ_PHILADELPHIA = 77,
         CBOE_BYX = 78,
         CBOE_BZX = 79,
         MIAX_PEARL = 80,
         MEMBERS_EXCHANGE = 81,
-        OTC_EQUITY_SECURITY = 82
+        OTC_EQUITY_SECURITY = 82,
+        BITGET = 83,
+        HYPERLIQUID = 84,
+        HYPERLIQUID_FUTURES = 85,
+        MARKET_INDEPENDENT = 86,
+        NASDAQ_SMALL_CAP = 87,
+        NASDAQ_INT = 88,
+        NASDAQ_PSX = 89,
+        PYTH_NETWORK = 90,
+        COINBASE_INTERNATIONAL = 91,
+        POLYGON = 92,
+        POLYGON_FX = 93,
+        UNISWAP_V2 = 150,
+        SUSHISWAP_V2 = 151,
+        PANCAKESWAP_V2 = 152,
+        SHIBASWAP = 153,
+        FRAXSWAP = 154,
+        SOLIDLY = 155,
+        UNISWAP_V3 = 156,
+        SUSHISWAP_V3 = 157,
+        PANCAKESWAP_V3 = 158,
+        SOLIDLY_V3 = 159,
+        RAYDIUM_V4 = 160,
+        RAYDIUM_CLMM = 161,
+        ORCA_WHIRLPOOL = 162,
+        ORCA_V2 = 163,
+        METEORA_POOL = 164,
+        METEORA_DLMM = 165,
+        UNISWAP_V4 = 166
     }
     export enum PointCategory {
         UNKNOWN_CATEGORY = 0,
@@ -1060,19 +1145,97 @@ export namespace api {
         }
     }
     export class Point extends pb_1.Message {
-        #one_of_decls: number[][] = [[7, 15, 108], [1]];
+        #one_of_decls: number[][] = [[7, 10, 12, 13, 15, 20, 60, 108, 148], [1]];
         constructor(data?: any[] | ({} & (({
             trade?: dependency_5.Trade;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
             tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
             tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
         } | {
             trade?: never;
+            fundingRateAggregation?: dependency_7.FundingRateAggregation;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: dependency_8.LiquidationAggregation;
+            openInterestAggregation?: never;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: dependency_6.OpenInterestAggregation;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
             tradeAggregation?: dependency_3.TradeAggregation;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
             tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
         } | {
             trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
             tradeAggregation?: never;
+            cmeOpenInterestAggregation?: dependency_9.CmeOpenInterestAggregation;
+            optionOpenInterestAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: dependency_10.OptionOpenInterestAggregation;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
             tradeSideAgnosticAggregation?: dependency_4.TradeSideAgnosticAggregation;
+            hyperliquidLiquidationAggregation?: never;
+        } | {
+            trade?: never;
+            fundingRateAggregation?: never;
+            liquidationAggregation?: never;
+            openInterestAggregation?: never;
+            tradeAggregation?: never;
+            cmeOpenInterestAggregation?: never;
+            optionOpenInterestAggregation?: never;
+            tradeSideAgnosticAggregation?: never;
+            hyperliquidLiquidationAggregation?: dependency_11.HyperliquidLiquidationAggregation;
         }) | ({
             id?: PointSeriesIdentifier;
         })))) {
@@ -1085,11 +1248,29 @@ export namespace api {
                 if ("trade" in data && data.trade != undefined) {
                     this.trade = data.trade;
                 }
+                if ("fundingRateAggregation" in data && data.fundingRateAggregation != undefined) {
+                    this.fundingRateAggregation = data.fundingRateAggregation;
+                }
+                if ("liquidationAggregation" in data && data.liquidationAggregation != undefined) {
+                    this.liquidationAggregation = data.liquidationAggregation;
+                }
+                if ("openInterestAggregation" in data && data.openInterestAggregation != undefined) {
+                    this.openInterestAggregation = data.openInterestAggregation;
+                }
                 if ("tradeAggregation" in data && data.tradeAggregation != undefined) {
                     this.tradeAggregation = data.tradeAggregation;
                 }
+                if ("cmeOpenInterestAggregation" in data && data.cmeOpenInterestAggregation != undefined) {
+                    this.cmeOpenInterestAggregation = data.cmeOpenInterestAggregation;
+                }
+                if ("optionOpenInterestAggregation" in data && data.optionOpenInterestAggregation != undefined) {
+                    this.optionOpenInterestAggregation = data.optionOpenInterestAggregation;
+                }
                 if ("tradeSideAgnosticAggregation" in data && data.tradeSideAgnosticAggregation != undefined) {
                     this.tradeSideAgnosticAggregation = data.tradeSideAgnosticAggregation;
+                }
+                if ("hyperliquidLiquidationAggregation" in data && data.hyperliquidLiquidationAggregation != undefined) {
+                    this.hyperliquidLiquidationAggregation = data.hyperliquidLiquidationAggregation;
                 }
             }
         }
@@ -1111,6 +1292,33 @@ export namespace api {
         get has_trade() {
             return pb_1.Message.getField(this, 7) != null;
         }
+        get fundingRateAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_7.FundingRateAggregation, 10) as dependency_7.FundingRateAggregation;
+        }
+        set fundingRateAggregation(value: dependency_7.FundingRateAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 10, this.#one_of_decls[0], value);
+        }
+        get has_fundingRateAggregation() {
+            return pb_1.Message.getField(this, 10) != null;
+        }
+        get liquidationAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_8.LiquidationAggregation, 12) as dependency_8.LiquidationAggregation;
+        }
+        set liquidationAggregation(value: dependency_8.LiquidationAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 12, this.#one_of_decls[0], value);
+        }
+        get has_liquidationAggregation() {
+            return pb_1.Message.getField(this, 12) != null;
+        }
+        get openInterestAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_6.OpenInterestAggregation, 13) as dependency_6.OpenInterestAggregation;
+        }
+        set openInterestAggregation(value: dependency_6.OpenInterestAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 13, this.#one_of_decls[0], value);
+        }
+        get has_openInterestAggregation() {
+            return pb_1.Message.getField(this, 13) != null;
+        }
         get tradeAggregation() {
             return pb_1.Message.getWrapperField(this, dependency_3.TradeAggregation, 15) as dependency_3.TradeAggregation;
         }
@@ -1119,6 +1327,24 @@ export namespace api {
         }
         get has_tradeAggregation() {
             return pb_1.Message.getField(this, 15) != null;
+        }
+        get cmeOpenInterestAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_9.CmeOpenInterestAggregation, 20) as dependency_9.CmeOpenInterestAggregation;
+        }
+        set cmeOpenInterestAggregation(value: dependency_9.CmeOpenInterestAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 20, this.#one_of_decls[0], value);
+        }
+        get has_cmeOpenInterestAggregation() {
+            return pb_1.Message.getField(this, 20) != null;
+        }
+        get optionOpenInterestAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_10.OptionOpenInterestAggregation, 60) as dependency_10.OptionOpenInterestAggregation;
+        }
+        set optionOpenInterestAggregation(value: dependency_10.OptionOpenInterestAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 60, this.#one_of_decls[0], value);
+        }
+        get has_optionOpenInterestAggregation() {
+            return pb_1.Message.getField(this, 60) != null;
         }
         get tradeSideAgnosticAggregation() {
             return pb_1.Message.getWrapperField(this, dependency_4.TradeSideAgnosticAggregation, 108) as dependency_4.TradeSideAgnosticAggregation;
@@ -1129,16 +1355,31 @@ export namespace api {
         get has_tradeSideAgnosticAggregation() {
             return pb_1.Message.getField(this, 108) != null;
         }
+        get hyperliquidLiquidationAggregation() {
+            return pb_1.Message.getWrapperField(this, dependency_11.HyperliquidLiquidationAggregation, 148) as dependency_11.HyperliquidLiquidationAggregation;
+        }
+        set hyperliquidLiquidationAggregation(value: dependency_11.HyperliquidLiquidationAggregation) {
+            pb_1.Message.setOneofWrapperField(this, 148, this.#one_of_decls[0], value);
+        }
+        get has_hyperliquidLiquidationAggregation() {
+            return pb_1.Message.getField(this, 148) != null;
+        }
         get point() {
             const cases: {
-                [index: number]: "none" | "trade" | "tradeAggregation" | "tradeSideAgnosticAggregation";
+                [index: number]: "none" | "trade" | "fundingRateAggregation" | "liquidationAggregation" | "openInterestAggregation" | "tradeAggregation" | "cmeOpenInterestAggregation" | "optionOpenInterestAggregation" | "tradeSideAgnosticAggregation" | "hyperliquidLiquidationAggregation";
             } = {
                 0: "none",
                 7: "trade",
+                10: "fundingRateAggregation",
+                12: "liquidationAggregation",
+                13: "openInterestAggregation",
                 15: "tradeAggregation",
-                108: "tradeSideAgnosticAggregation"
+                20: "cmeOpenInterestAggregation",
+                60: "optionOpenInterestAggregation",
+                108: "tradeSideAgnosticAggregation",
+                148: "hyperliquidLiquidationAggregation"
             };
-            return cases[pb_1.Message.computeOneofCase(this, [7, 15, 108])];
+            return cases[pb_1.Message.computeOneofCase(this, [7, 10, 12, 13, 15, 20, 60, 108, 148])];
         }
         get _id() {
             const cases: {
@@ -1152,8 +1393,14 @@ export namespace api {
         static fromObject(data: {
             id?: ReturnType<typeof PointSeriesIdentifier.prototype.toObject>;
             trade?: ReturnType<typeof dependency_5.Trade.prototype.toObject>;
+            fundingRateAggregation?: ReturnType<typeof dependency_7.FundingRateAggregation.prototype.toObject>;
+            liquidationAggregation?: ReturnType<typeof dependency_8.LiquidationAggregation.prototype.toObject>;
+            openInterestAggregation?: ReturnType<typeof dependency_6.OpenInterestAggregation.prototype.toObject>;
             tradeAggregation?: ReturnType<typeof dependency_3.TradeAggregation.prototype.toObject>;
+            cmeOpenInterestAggregation?: ReturnType<typeof dependency_9.CmeOpenInterestAggregation.prototype.toObject>;
+            optionOpenInterestAggregation?: ReturnType<typeof dependency_10.OptionOpenInterestAggregation.prototype.toObject>;
             tradeSideAgnosticAggregation?: ReturnType<typeof dependency_4.TradeSideAgnosticAggregation.prototype.toObject>;
+            hyperliquidLiquidationAggregation?: ReturnType<typeof dependency_11.HyperliquidLiquidationAggregation.prototype.toObject>;
         }): Point {
             const message = new Point({});
             if (data.id != null) {
@@ -1162,11 +1409,29 @@ export namespace api {
             if (data.trade != null) {
                 message.trade = dependency_5.Trade.fromObject(data.trade);
             }
+            if (data.fundingRateAggregation != null) {
+                message.fundingRateAggregation = dependency_7.FundingRateAggregation.fromObject(data.fundingRateAggregation);
+            }
+            if (data.liquidationAggregation != null) {
+                message.liquidationAggregation = dependency_8.LiquidationAggregation.fromObject(data.liquidationAggregation);
+            }
+            if (data.openInterestAggregation != null) {
+                message.openInterestAggregation = dependency_6.OpenInterestAggregation.fromObject(data.openInterestAggregation);
+            }
             if (data.tradeAggregation != null) {
                 message.tradeAggregation = dependency_3.TradeAggregation.fromObject(data.tradeAggregation);
             }
+            if (data.cmeOpenInterestAggregation != null) {
+                message.cmeOpenInterestAggregation = dependency_9.CmeOpenInterestAggregation.fromObject(data.cmeOpenInterestAggregation);
+            }
+            if (data.optionOpenInterestAggregation != null) {
+                message.optionOpenInterestAggregation = dependency_10.OptionOpenInterestAggregation.fromObject(data.optionOpenInterestAggregation);
+            }
             if (data.tradeSideAgnosticAggregation != null) {
                 message.tradeSideAgnosticAggregation = dependency_4.TradeSideAgnosticAggregation.fromObject(data.tradeSideAgnosticAggregation);
+            }
+            if (data.hyperliquidLiquidationAggregation != null) {
+                message.hyperliquidLiquidationAggregation = dependency_11.HyperliquidLiquidationAggregation.fromObject(data.hyperliquidLiquidationAggregation);
             }
             return message;
         }
@@ -1174,8 +1439,14 @@ export namespace api {
             const data: {
                 id?: ReturnType<typeof PointSeriesIdentifier.prototype.toObject>;
                 trade?: ReturnType<typeof dependency_5.Trade.prototype.toObject>;
+                fundingRateAggregation?: ReturnType<typeof dependency_7.FundingRateAggregation.prototype.toObject>;
+                liquidationAggregation?: ReturnType<typeof dependency_8.LiquidationAggregation.prototype.toObject>;
+                openInterestAggregation?: ReturnType<typeof dependency_6.OpenInterestAggregation.prototype.toObject>;
                 tradeAggregation?: ReturnType<typeof dependency_3.TradeAggregation.prototype.toObject>;
+                cmeOpenInterestAggregation?: ReturnType<typeof dependency_9.CmeOpenInterestAggregation.prototype.toObject>;
+                optionOpenInterestAggregation?: ReturnType<typeof dependency_10.OptionOpenInterestAggregation.prototype.toObject>;
                 tradeSideAgnosticAggregation?: ReturnType<typeof dependency_4.TradeSideAgnosticAggregation.prototype.toObject>;
+                hyperliquidLiquidationAggregation?: ReturnType<typeof dependency_11.HyperliquidLiquidationAggregation.prototype.toObject>;
             } = {};
             if (this.id != null) {
                 data.id = this.id.toObject();
@@ -1183,11 +1454,29 @@ export namespace api {
             if (this.trade != null) {
                 data.trade = this.trade.toObject();
             }
+            if (this.fundingRateAggregation != null) {
+                data.fundingRateAggregation = this.fundingRateAggregation.toObject();
+            }
+            if (this.liquidationAggregation != null) {
+                data.liquidationAggregation = this.liquidationAggregation.toObject();
+            }
+            if (this.openInterestAggregation != null) {
+                data.openInterestAggregation = this.openInterestAggregation.toObject();
+            }
             if (this.tradeAggregation != null) {
                 data.tradeAggregation = this.tradeAggregation.toObject();
             }
+            if (this.cmeOpenInterestAggregation != null) {
+                data.cmeOpenInterestAggregation = this.cmeOpenInterestAggregation.toObject();
+            }
+            if (this.optionOpenInterestAggregation != null) {
+                data.optionOpenInterestAggregation = this.optionOpenInterestAggregation.toObject();
+            }
             if (this.tradeSideAgnosticAggregation != null) {
                 data.tradeSideAgnosticAggregation = this.tradeSideAgnosticAggregation.toObject();
+            }
+            if (this.hyperliquidLiquidationAggregation != null) {
+                data.hyperliquidLiquidationAggregation = this.hyperliquidLiquidationAggregation.toObject();
             }
             return data;
         }
@@ -1199,10 +1488,22 @@ export namespace api {
                 writer.writeMessage(1, this.id, () => this.id.serialize(writer));
             if (this.has_trade)
                 writer.writeMessage(7, this.trade, () => this.trade.serialize(writer));
+            if (this.has_fundingRateAggregation)
+                writer.writeMessage(10, this.fundingRateAggregation, () => this.fundingRateAggregation.serialize(writer));
+            if (this.has_liquidationAggregation)
+                writer.writeMessage(12, this.liquidationAggregation, () => this.liquidationAggregation.serialize(writer));
+            if (this.has_openInterestAggregation)
+                writer.writeMessage(13, this.openInterestAggregation, () => this.openInterestAggregation.serialize(writer));
             if (this.has_tradeAggregation)
                 writer.writeMessage(15, this.tradeAggregation, () => this.tradeAggregation.serialize(writer));
+            if (this.has_cmeOpenInterestAggregation)
+                writer.writeMessage(20, this.cmeOpenInterestAggregation, () => this.cmeOpenInterestAggregation.serialize(writer));
+            if (this.has_optionOpenInterestAggregation)
+                writer.writeMessage(60, this.optionOpenInterestAggregation, () => this.optionOpenInterestAggregation.serialize(writer));
             if (this.has_tradeSideAgnosticAggregation)
                 writer.writeMessage(108, this.tradeSideAgnosticAggregation, () => this.tradeSideAgnosticAggregation.serialize(writer));
+            if (this.has_hyperliquidLiquidationAggregation)
+                writer.writeMessage(148, this.hyperliquidLiquidationAggregation, () => this.hyperliquidLiquidationAggregation.serialize(writer));
             if (!w)
                 return writer.getResultBuffer();
         }
@@ -1218,11 +1519,29 @@ export namespace api {
                     case 7:
                         reader.readMessage(message.trade, () => message.trade = dependency_5.Trade.deserialize(reader));
                         break;
+                    case 10:
+                        reader.readMessage(message.fundingRateAggregation, () => message.fundingRateAggregation = dependency_7.FundingRateAggregation.deserialize(reader));
+                        break;
+                    case 12:
+                        reader.readMessage(message.liquidationAggregation, () => message.liquidationAggregation = dependency_8.LiquidationAggregation.deserialize(reader));
+                        break;
+                    case 13:
+                        reader.readMessage(message.openInterestAggregation, () => message.openInterestAggregation = dependency_6.OpenInterestAggregation.deserialize(reader));
+                        break;
                     case 15:
                         reader.readMessage(message.tradeAggregation, () => message.tradeAggregation = dependency_3.TradeAggregation.deserialize(reader));
                         break;
+                    case 20:
+                        reader.readMessage(message.cmeOpenInterestAggregation, () => message.cmeOpenInterestAggregation = dependency_9.CmeOpenInterestAggregation.deserialize(reader));
+                        break;
+                    case 60:
+                        reader.readMessage(message.optionOpenInterestAggregation, () => message.optionOpenInterestAggregation = dependency_10.OptionOpenInterestAggregation.deserialize(reader));
+                        break;
                     case 108:
                         reader.readMessage(message.tradeSideAgnosticAggregation, () => message.tradeSideAgnosticAggregation = dependency_4.TradeSideAgnosticAggregation.deserialize(reader));
+                        break;
+                    case 148:
+                        reader.readMessage(message.hyperliquidLiquidationAggregation, () => message.hyperliquidLiquidationAggregation = dependency_11.HyperliquidLiquidationAggregation.deserialize(reader));
                         break;
                     default: reader.skipField();
                 }
