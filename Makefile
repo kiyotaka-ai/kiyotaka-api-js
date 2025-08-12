@@ -6,9 +6,9 @@ FILES := $(PROTO_DIR)/service/api/*.proto \
 		$(PROTO_DIR)/lib/timestamp/timestamp.proto \
 		$(PROTO_DIR)/types/*.proto \
 
-.PHONY: clean all
+.PHONY: $(DIST)
 
-all: $(DIST)
+all: clean $(DIST)
 
 $(PROTO_DIR):
 	wget --recursive https://api.kiyotaka.ai/proto/
